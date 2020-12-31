@@ -1,0 +1,20 @@
+Section "Monitor"
+    Identifier "DVI-I-1"
+    #Option "PreferredMode" "640x480"
+
+    Modeline "640x480_75"   31.50  640 656 720 840  480 481 484 500 -hsync -vsync
+EndSection
+
+Section "Screen"
+    Identifier		"Screen0"
+    Monitor			"HDMI-I-1"
+	SubSection		"Display"
+		Modes			"640x480_75"
+	EndSubSection
+EndSection
+
+# ctrl-alt-keypad plus
+# 1280x1024
+
+# ctrl-alt-keypad plus
+# 1280x1024
