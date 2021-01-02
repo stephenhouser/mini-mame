@@ -14,9 +14,10 @@ mame_pass=mame
 
 dotfiles=".xinitrc .screenrc .attract .mame"
 
-# Get ourselves root via sudo
+# Get ourselves root via sudo if we are not running with sudo already...
 if [[ "$EUID" != 0 ]]; then
-	sudo $0
+	ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
+	sudo ${ABSOLUTE_PATH}
 	exit 1
 fi
 # Do your sudo stuff here. Password will not be asked again due to caching.
@@ -28,9 +29,8 @@ cp /etc/pacman.conf /etc/pacman.conf.bak
 awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf.bak > /etc/pacman.conf
 
 # Full system update and upgrade to latest rolling release!
-pacman -Sy
-pacman -Syy
-pacman -Syu
+pacman -Syy			# update package indicies
+pacman -Syu			# upgrade the packages.
 
 # Base system tools
 # xorg				-- X windows
@@ -60,6 +60,7 @@ pacman --noconfirm -S \
 # wine				-- not an emulator of windoes
 # winetricks		-- for setting things up easier
 pacman --noconfirm -S wine winetricks
+# to get a cmd prompt ... $ wineconsole cmd
 
 # Mutliple Arcade Machine Emulator
 # mame				-- the emulator
