@@ -75,7 +75,7 @@ sudo pacman --noconfirm -S wine winetricks
 # Copy in dot files
 echo ""
 echo "Setup dot files..."
-rsync -avz ./skeleton ${HOME}
+rsync -avz ./skeleton/ ${HOME}
 
 cat >> ${HOME}/.zshrc << EOF
 export EDITOR='vim'
