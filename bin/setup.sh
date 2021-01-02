@@ -47,8 +47,9 @@ pacman --noconfirm -S \
 	xorg xorg-xinit xorg-fonts-misc xterm \
 	alsa-utils lib32-alsa-lib \
 	pulseaudio lib32-libpulse \
-	fuseiso \
-	fbdia
+	fuseiso
+
+#	fbdia
 
 # Was experimenting with CDEmu. Don't seem to need it (yet)
 # vhba-module 	-- emulates SCSI devices (for CDEmu)
@@ -82,17 +83,17 @@ echo ""
 echo "Setting MAME (autologin) account..."
 # Add user account
 useradd -mU -s /usr/bin/zsh -G  wheel,uucp,video,audio,storage,games,input ${mame_user}
-chsh -u ${mame_user} -s /usr/bin/zsh
+chsh -s /usr/bin/zsh ${mame_user}
 echo "${mame_user}:${mame_password}" | chpasswd
 
 # Copy in dot files
 echo ""
 echo "Setup ${mame_user} dot files..."
 for f in ${skeleton_files}; do
-	cp -Rv ${f} ~${mame_user}/
+	cp -Rv ${f} /home/${mame_user}/
 done
 
-cat >> ~${mame_user}/.zshrc << EOF
+cat >> /home/${mame_user}/.zshrc << EOF
 export EDITOR='vim'
 export PAGER=`which less`
 export LESS="-eFRX -x4"
