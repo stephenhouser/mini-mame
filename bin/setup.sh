@@ -10,7 +10,7 @@
 #
 
 mame_user=mame
-mame_pass=mame
+mame_password=mame
 
 skeleton_files=".xinitrc .screenrc .attract .mame bin kids-games"
 
@@ -89,7 +89,7 @@ echo "${mame_user}:${mame_password}" | chpasswd
 echo ""
 echo "Setup ${mame_user} dot files..."
 for f in ${skeleton_files}; do
-	cp -Rv ${f} ~${mame_user}
+	cp -Rv ${f} ~${mame_user}/
 done
 
 cat >> ~${mame_user}/.zshrc << EOF
