@@ -82,7 +82,7 @@ echo ""
 echo "Setting MAME (autologin) account..."
 # Add user account
 useradd -mU -s /usr/bin/zsh -G  wheel,uucp,video,audio,storage,games,input ${mame_user}
-chsh -s /usr/bin/zsh
+chsh -u ${mame_user} -s /usr/bin/zsh
 echo "${mame_user}:${mame_password}" | chpasswd
 
 # Copy in dot files
