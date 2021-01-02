@@ -12,7 +12,7 @@ app_path=$2
 display_mode=${3:-"640x480"}
 
 mapped_drive=~/.wine/dosdevices/${wine_drive}
-active_output=$(xrandr -q | sed -n 's/^\(.*\)( connected.*\)$/\1/p'
+active_output=$(xrandr -q | sed -n 's/^\(.*\)\( connected.*\)$/\1/p')
 
 # Unmount or otherwise remove any old mounted drive
 if mount | grep ${mapped_drive} > /dev/null; then
@@ -29,7 +29,6 @@ fi
 fuseiso "${iso_path}" ${mapped_drive}
 
 # Change screen to resolution for game...
-display="DVI-I-1"
 xrandr --output ${active_output} --mode ${display_mode}
 
 # Start the game in wine...

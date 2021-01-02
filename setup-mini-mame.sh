@@ -4,33 +4,49 @@
 # This assumes you have run the `arch-bootstrap.sh` script prior to this
 # and have a working (networked) base system.
 #
-# 
-#
 # 2020/12/31 - Stephen Houser <stephenhouser@gmail.com>
 #
 
 mame_user=mame
 mame_password=mame
 
+# If I am *not* the mame user, create the *mame* user and run as them.
+if [ "${USER}" != "${mame_user}" ]; then
+	if $(whiptail --yesno "You are not ${mame_user}. Continue anyway?" 0 0); then
+		;	# simply continues after the if...
+	else
+		if $(whiptail --yesno "Would you like to create ${mame_user}?" 0 0); then
+			echo ""
+			echo "Creating ${mame_user}..."
+			useradd -mU -s /usr/bin/zsh -G  wheel,uucp,video,audio,storage,games,input ${mame_user}
+			chsh -s /usr/bin/zsh ${mame_user}
+			echo "${mame_user}:${mame_password}" | chpasswd
+
+			echo ""
+			echo "You should now log in as ${mame_user} and re-run this script."
+		fi
+		exit 0
+	fi
+fi
+
 skeleton_files=".xinitrc .screenrc .attract .mame bin kids-games"
 
 # Get ourselves root via sudo if we are not running with sudo already...
-if [[ "$EUID" != 0 ]]; then
-	ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
-	sudo ${ABSOLUTE_PATH}
-	exit 1
-fi
-# Do your sudo stuff here. Password will not be asked again due to caching.
+# if [[ "$EUID" != 0 ]]; then
+# 	ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
+# 	sudo ${ABSOLUTE_PATH}
+# 	exit 1
+# fi
 
 # Enable multilib to get wine
 echo ""
 echo "Updating system... (adding multilib for Wine)..."
-cp /etc/pacman.conf /etc/pacman.conf.bak
-awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf.bak > /etc/pacman.conf
+sodo cp /etc/pacman.conf /etc/pacman.conf.bak
+sudo awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf.bak > /etc/pacman.conf
 
 # Full system update and upgrade to latest rolling release!
-pacman -Syy			# update package indicies
-pacman -Syu			# upgrade the packages.
+sudo pacman -Syy			# update package indicies
+sudo pacman -Syu			# upgrade the packages.
 
 # Base system tools
 # xorg				-- X windows
@@ -43,12 +59,16 @@ pacman -Syu			# upgrade the packages.
 # lib32-libpulse	-- for 32-bit windows
 # fuseiso			-- Enable user mounting of ISO images
 # fbdia				-- display images on the console framebuffer
-pacman --noconfirm -S \
+# lxde				-- lightweight window manager
+sudo pacman --noconfirm -S \
 	xorg xorg-xinit xorg-fonts-misc xterm \
 	alsa-utils lib32-alsa-lib \
 	pulseaudio lib32-libpulse \
-	fuseiso
+	fuseiso \
+	lxde
 
+# lwm				-- super tiny window manager that only managers windows!
+# xorg-twm			-- minimal window manager
 #	fbdia
 
 # Was experimenting with CDEmu. Don't seem to need it (yet)
@@ -60,41 +80,17 @@ pacman --noconfirm -S \
 # Microsoft Windows things...
 # wine				-- not an emulator of windoes
 # winetricks		-- for setting things up easier
-pacman --noconfirm -S wine winetricks
+sudo pacman --noconfirm -S wine winetricks
 # to get a cmd prompt ... $ wineconsole cmd
-
-# Mutliple Arcade Machine Emulator
-# mame				-- the emulator
-pacman --noconfirm -S mame
-
-# Install/build MAME from AUR
-#git clone https://aur.archlinux.org/mame-git.git mame
-#cd mame
-#makepkg -si
-#cd ..
-
-# Install/build attract mode from AUR
-#git clone https://aur.archlinux.org/attract-git.git
-#cd attract
-#makepkg -si
-#cd ..
-
-echo ""
-echo "Setting MAME (autologin) account..."
-# Add user account
-useradd -mU -s /usr/bin/zsh -G  wheel,uucp,video,audio,storage,games,input ${mame_user}
-chsh -s /usr/bin/zsh ${mame_user}
-echo "${mame_user}:${mame_password}" | chpasswd
 
 # Copy in dot files
 echo ""
-echo "Setup ${mame_user} dot files..."
+echo "Setup dot files..."
 for f in ${skeleton_files}; do
-	cp -Rv ${f} /home/${mame_user}/
-	chown -R ${mame_user}:${mame_user} $f
+	cp -Rv ${f} ${HOME}/
 done
 
-cat >> /home/${mame_user}/.zshrc << EOF
+cat >> ${HOME}/.zshrc << EOF
 export EDITOR='vim'
 export PAGER=`which less`
 #export LESS="-eFRX -x4"
@@ -104,24 +100,46 @@ export PAGER=`which less`
 alias vi=vim
 alias ls='ls --color=auto'
 
-if [ -d "/home/${mame_user}/bin" ] ; then
-        PATH="/home/${mame_user}/bin:$PATH"
+if [ -d "${HOME}/bin" ] ; then
+        PATH="${HOME}/bin:$PATH"
 fi
 EOF
 
+echo ""
+echo "Setting autologin account..."
 # Enable automatic login to the console
 # https://wiki.archlinux.org/index.php/Getty
 echo ""
-echo "Enable auto-login as ${mame_user}..."
+echo "Enable auto-login as ${USER}..."
 mkdir -p /etc/systemd/system/getty@tty1.service.d
 cat >> /etc/systemd/system/getty@tty1.service.d/override.conf << EOF
 [Service]
 ExecStart=
-ExecStart=-/usr/bin/agetty --autologin ${mame_user} --noclear %I $TERM
+ExecStart=-/usr/bin/agetty --autologin ${USER} --noclear %I $TERM
 EOF
 
 echo ""
 echo "done."
+
+
+echo "...need to run winecfg under x as mame user to configure it"
+
+# Mutliple Arcade Machine Emulator
+# mame				-- the emulator
+# pacman --noconfirm -S mame
+
+# Install/build MAME from AUR
+# git clone https://aur.archlinux.org/mame-git.git mame
+# cd mame
+# makepkg -si
+# cd ..
+
+# Install/build attract mode from AUR
+# git clone https://aur.archlinux.org/attract-git.git
+# cd attract
+# makepkg -si
+# cd ..
+
 
 
 # Using old Kids-MAME Windows directory...
