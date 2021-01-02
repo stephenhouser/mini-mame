@@ -12,7 +12,6 @@ userresources=$HOME/.Xresources
 
 usermodmap=$HOME/.Xmodmap
 [ -f "$usermodmap" ] && xmodmap "$usermodmap"
-fi
 
 # start some nice programs when nothing else was specified
 exec xterm -geometry 80x43+0+0 -name login

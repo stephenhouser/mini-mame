@@ -91,13 +91,15 @@ echo ""
 echo "Setup ${mame_user} dot files..."
 for f in ${skeleton_files}; do
 	cp -Rv ${f} /home/${mame_user}/
+	chown -R ${mame_user}:${mame_user} $f
 done
 
 cat >> /home/${mame_user}/.zshrc << EOF
 export EDITOR='vim'
 export PAGER=`which less`
-export LESS="-eFRX -x4"
-export MANPAGER="$PAGER -isX"
+#export LESS="-eFRX -x4"
+#export MORE="-eFRX -x4"
+#export MANPAGER="$PAGER -isX"
 
 alias vi=vim
 alias ls='ls --color=auto'
