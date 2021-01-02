@@ -104,8 +104,8 @@ export PAGER=`which less`
 alias vi=vim
 alias ls='ls --color=auto'
 
-if [ -d "$HOME/bin" ] ; then
-        PATH="$HOME/bin:$PATH"
+if [ -d "/home/${mame_user}/bin" ] ; then
+        PATH="/home/${mame_user}/bin:$PATH"
 fi
 EOF
 
