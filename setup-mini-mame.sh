@@ -15,21 +15,9 @@ if [ "${USER}" != "${mame_user}" ]; then
 	if $(whiptail --yesno "You are not ${mame_user}. Continue anyway?" 0 0); then
 		;	# simply continues after the if...
 	else
-		if $(whiptail --yesno "Would you like to create ${mame_user}?" 0 0); then
-			echo ""
-			echo "Creating ${mame_user}..."
-			useradd -mU -s /usr/bin/zsh -G  wheel,uucp,video,audio,storage,games,input ${mame_user}
-			chsh -s /usr/bin/zsh ${mame_user}
-			echo "${mame_user}:${mame_password}" | chpasswd
-
-			echo ""
-			echo "You should now log in as ${mame_user} and re-run this script."
-		fi
 		exit 0
 	fi
 fi
-
-skeleton_files=".xinitrc .screenrc .attract .mame bin kids-games"
 
 # Get ourselves root via sudo if we are not running with sudo already...
 # if [[ "$EUID" != 0 ]]; then
@@ -86,9 +74,7 @@ sudo pacman --noconfirm -S wine winetricks
 # Copy in dot files
 echo ""
 echo "Setup dot files..."
-for f in ${skeleton_files}; do
-	cp -Rv ${f} ${HOME}/
-done
+rsync -avz ./skeleton_files ${HOME}
 
 cat >> ${HOME}/.zshrc << EOF
 export EDITOR='vim'

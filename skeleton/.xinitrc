@@ -14,4 +14,7 @@ usermodmap=$HOME/.Xmodmap
 [ -f "$usermodmap" ] && xmodmap "$usermodmap"
 
 # start some nice programs when nothing else was specified
-exec xterm -geometry 80x43+0+0 -name login
+#xterm -geometry 80x43+0+0 -name login
+exec startlxde
+#exec start attract
+
