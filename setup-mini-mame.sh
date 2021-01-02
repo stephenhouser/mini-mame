@@ -13,7 +13,7 @@ mame_password=mame
 # If I am *not* the mame user, create the *mame* user and run as them.
 if [ "${USER}" != "${mame_user}" ]; then
 	if $(whiptail --yesno "You are not ${mame_user}. Continue anyway?" 0 0); then
-		;	# simply continues after the if...
+		:	# simply continues after the if...
 	else
 		exit 0
 	fi
