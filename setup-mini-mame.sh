@@ -30,8 +30,8 @@ fi
 echo ""
 echo "Updating system... (adding multilib for Wine)..."
 sudo cp /etc/pacman.conf /etc/pacman.conf.bak
-awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf > /tmp/pacman.conf
-sudo mv /tmp/pacman.conf /etc/pacman.conf
+awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf > /tmp/pacman.conf.$$
+sudo mv /tmp/pacman.conf.$$ /etc/pacman.conf
 
 # Full system update and upgrade to latest rolling release!
 sudo pacman -Syy			# update package indicies
@@ -98,12 +98,13 @@ echo "Setting autologin account..."
 # https://wiki.archlinux.org/index.php/Getty
 echo ""
 echo "Enable auto-login as ${USER}..."
-sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
-sudo cat >> /etc/systemd/system/getty@tty1.service.d/override.conf << EOF
+cat >> /tmp/override.conf.$$ << EOF
 [Service]
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin ${USER} --noclear %I $TERM
 EOF
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
+sudo mv /tmp/override.conf.$$ /etc/systemd/system/getty@tty1.service.d/override.conf
 
 echo ""
 echo "done."
