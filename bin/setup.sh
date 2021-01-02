@@ -12,7 +12,7 @@
 mame_user=mame
 mame_pass=mame
 
-dotfiles=".xinitrc .screenrc .attract .mame"
+skeleton_files=".xinitrc .screenrc .attract .mame bin kids-games"
 
 # Get ourselves root via sudo if we are not running with sudo already...
 if [[ "$EUID" != 0 ]]; then
@@ -88,8 +88,8 @@ echo "${mame_user}:${mame_password}" | chpasswd
 # Copy in dot files
 echo ""
 echo "Setup ${mame_user} dot files..."
-for dot in ${dotfiles}; do
-	cp -Rv ${dot} ~${mame_user}
+for f in ${skeleton_files}; do
+	cp -Rv ${f} ~${mame_user}
 done
 
 cat >> ~${mame_user}/.zshrc << EOF
