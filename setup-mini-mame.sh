@@ -107,12 +107,11 @@ sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
 sudo mv /tmp/override.conf.$$ /etc/systemd/system/getty@tty1.service.d/override.conf
 
 echo ""
-echo "done."
-
-
-echo "...need to run winecfg under x as mame user to configure it"
-echo "	startx /usr/bin/wine"
+echo "You still need need to run `wine` and `winecfg` under X to configure Wine"
+echo "	startx /usr/bin/wine progman"
 echo "	startx /usr/bin/winecfg"
+echo "and install any packages it asks to install."
+echo ""
 
 # Mutliple Arcade Machine Emulator
 # mame				-- the emulator
