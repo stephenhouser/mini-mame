@@ -43,21 +43,26 @@ sudo pacman -Syu			# upgrade the packages.
 # xorg-fonts-misc	-- we need some basic fonts for X11
 # xterm				-- you need some sort of terminal
 # alsa-utils		-- audio drivers
-# lib32-alsa-lib	-- for 32-bit windows
 # pulseaudio		-- for more complex than alsa
-# lib32-libpulse	-- for 32-bit windows
 # fuseiso			-- Enable user mounting of ISO images
-# fbdia				-- display images on the console framebuffer
 # lxde				-- lightweight window manager
 sudo pacman --noconfirm -S \
-	xorg xorg-xinit xorg-fonts-misc xterm \
-	alsa-utils lib32-alsa-lib \
-	pulseaudio lib32-libpulse \
-	fuseiso \
-	lxde
+	xorg xorg-xinit xorg-fonts-misc xterm lxde \
+	alsa-utils pulseaudio \
+	fuseiso
+
+echo ""
+echo "Unmute ALSA Audio..."
+amixer sset Master unmute
+amixer sset Master '75%'
+amixer sset Speaker unmute
+amixer sset Speaker '75%'
+amixer sset Headphone unmute
+amixer sset Headphone '75%'
 
 # lwm				-- super tiny window manager that only managers windows!
 # xorg-twm			-- minimal window manager
+# fbdia				-- display images on the console framebuffer
 #	fbdia
 
 # Was experimenting with CDEmu. Don't seem to need it (yet)
@@ -67,10 +72,23 @@ sudo pacman --noconfirm -S \
 #systemctl enable cdemu-daemon.service
 
 # Microsoft Windows things...
+# https://wiki.archlinux.org/index.php/Wine
 # wine				-- not an emulator of windoes
 # winetricks		-- for setting things up easier
-sudo pacman --noconfirm -S wine winetricks
+# wine-mono			-- .NET framework
+# wine-gecko		-- Internet Explorer widgets
+# lib32-alsa-lib	-- for 32-bit windows
+# lib32-libpulse	-- for 32-bit windows
+# lib32-mpg123		-- MP3 for wine
+# lib32-giflib		-- GIF for wine
+# lib32-libpng		-- PNG for wine
+sudo pacman --noconfirm -S \
+	wine winetricks wine-mono wine-gecko \
+	lib32-alsa-lib lib32-libpulse \
+	lib32-mpg123 lib32-giflib lib32-libpng
+
 # to get a cmd prompt ... $ wineconsole cmd
+# winetricks windowscodecs
 
 # Copy in dot files
 echo ""
@@ -128,8 +146,6 @@ echo ""
 # cd attract
 # makepkg -si
 # cd ..
-
-
 
 # Using old Kids-MAME Windows directory...
 # echo ""
