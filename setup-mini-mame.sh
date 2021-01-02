@@ -29,7 +29,7 @@ fi
 # Enable multilib to get wine
 echo ""
 echo "Updating system... (adding multilib for Wine)..."
-sodo cp /etc/pacman.conf /etc/pacman.conf.bak
+sudo cp /etc/pacman.conf /etc/pacman.conf.bak
 sudo awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf.bak > /etc/pacman.conf
 
 # Full system update and upgrade to latest rolling release!
