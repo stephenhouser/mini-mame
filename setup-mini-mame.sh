@@ -31,7 +31,7 @@ echo ""
 echo "Updating system... (adding multilib for Wine)..."
 sudo cp /etc/pacman.conf /etc/pacman.conf.bak
 awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf > /tmp/pacman.conf
-sudo mv /tmp/pacman.con /etc/pacman.conf
+sudo mv /tmp/pacman.conf /etc/pacman.conf
 
 # Full system update and upgrade to latest rolling release!
 sudo pacman -Syy			# update package indicies
@@ -98,8 +98,8 @@ echo "Setting autologin account..."
 # https://wiki.archlinux.org/index.php/Getty
 echo ""
 echo "Enable auto-login as ${USER}..."
-mkdir -p /etc/systemd/system/getty@tty1.service.d
-cat >> /etc/systemd/system/getty@tty1.service.d/override.conf << EOF
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
+sudo cat >> /etc/systemd/system/getty@tty1.service.d/override.conf << EOF
 [Service]
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin ${USER} --noclear %I $TERM
@@ -110,6 +110,8 @@ echo "done."
 
 
 echo "...need to run winecfg under x as mame user to configure it"
+echo "	startx /usr/bin/wine"
+echo "	startx /usr/bin/winecfg"
 
 # Mutliple Arcade Machine Emulator
 # mame				-- the emulator
