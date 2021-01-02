@@ -30,7 +30,8 @@ fi
 echo ""
 echo "Updating system... (adding multilib for Wine)..."
 sudo cp /etc/pacman.conf /etc/pacman.conf.bak
-sudo awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf.bak > /etc/pacman.conf
+awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf > /tmp/pacman.conf
+sudo mv /tmp/pacman.con /etc/pacman.conf
 
 # Full system update and upgrade to latest rolling release!
 sudo pacman -Syy			# update package indicies
