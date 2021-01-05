@@ -142,6 +142,12 @@ echo ""
 # cd ..
 
 # Install/build attract mode from AUR
+# git clone https://aur.archlinux.org/daphne.git
+# cd daphne
+# makepkg -si
+# cd ..
+
+# Install/build attract mode from AUR
 # git clone https://aur.archlinux.org/attract-git.git
 # cd attract
 # makepkg -si
