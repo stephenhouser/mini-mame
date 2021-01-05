@@ -15,6 +15,10 @@ usermodmap=$HOME/.Xmodmap
 
 # start some nice programs when nothing else was specified
 #xterm -geometry 80x43+0+0 -name login
-exec startlxde
-#exec start attract
+xhost +			# enable authentication
+xset -dpms		# disable monitor power management
+xset s off		# disable screen saver
+xset m 5/2 0	# tweak mouse
 
+#exec start attract
+exec startlxde
