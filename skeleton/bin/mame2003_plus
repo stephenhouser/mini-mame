@@ -1,0 +1,2 @@
+#!/bin/bash
+exec retroarch -L ~/.config/retroarch/cores/mame2003_plus_libretro.so "~/mame0.78+/$*"

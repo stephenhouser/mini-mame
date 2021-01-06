@@ -47,7 +47,10 @@ sudo pacman -Syu			# upgrade the packages.
 # fuseiso			-- Enable user mounting of ISO images
 # lxde				-- lightweight window manager
 sudo pacman --noconfirm -S \
-	xorg xorg-xinit xorg-fonts-misc xterm lxde \
+	xorg xorg-xinit \
+	xf86-video-ati xf86-video-amdgpu xf86-video-intel xf86-video-nouveau xf86-video-fbdev \
+	xorg-fonts-misc xterm xorg-mkfontdir \
+	lxde \
 	alsa-utils pulseaudio \
 	fuseiso
 
@@ -135,29 +138,72 @@ echo ""
 # mame				-- the emulator
 # pacman --noconfirm -S mame
 
-# Install/build MAME from AUR
+mkdir -p src
+cd src
+
+# Install/build MAME from AUR -- USE SPECIFIC VERSION 0.227
 # git clone https://aur.archlinux.org/mame-git.git mame
 # cd mame
+# sed -i 's|https://github.com/mamedev/mame.git|https://github.com/mamedev/mame.git#tag=mame0227|' PKGBUILD
 # makepkg -si
 # cd ..
 
 # Install/build attract mode from AUR
-# git clone https://aur.archlinux.org/daphne.git
+# Uses git://github.com/DavidGriffith/daphne.git
+# git clone https://aur.archlinux.org/daphne-git.git
 # cd daphne
 # makepkg -si
 # cd ..
 
 # Install/build attract mode from AUR
-# git clone https://aur.archlinux.org/attract-git.git
-# cd attract
-# makepkg -si
-# cd ..
+git clone https://aur.archlinux.org/attract-git.git
+cd attract
+makepkg -si
+cd ../..
 
 # Using old Kids-MAME Windows directory...
+# Mount Windwos partition to /media/windows
+mkdir -p /media/windows
+echo "# Mount WindowsXP Partition" >> /etc/fstab
+echo "/dev/sda1		/media/windows		ntfs	ro	0 2" >> /etc/fstab
+
+# Install RetroArch -- really for libretro and the "cores" that will allow
+# running earlier versions of MAME arcade games
+
+sudo pacman -S retroarch libretro-core-info libretro-overlays retroarch-assets-xmb
+
+# Run one time to get the template configuration setup
+sudo retroarch
+
+cat > ~/.config/retroarch/retroarch.cfg << EOF
+audio_filter_dir = "/usr/lib/retroarch/filters/audio"
+video_filter_dir = "/usr/lib/retroarch/filters/video"
+libretro_info_path = "/usr/share/libretro/info"
+config_save_on_exit = "true"
+assets_directory = "~/.config/retroarch/assets"
+libretro_directory = "~/.config/retroarch/cores"
+menu_show_core_updater = "true"
+video_shader_dir = "~/.config/retroarch/shaders"
+EOF
+
+# Download MAME 2000, MAME 2003+, and MAME 2010 cores for RetroARch / LibRetro
+cd ~/.config/retroarch/cores
+
+function download_core() {
+	rm -f ${1}
+	wget http://buildbot.libretro.com/nightly/linux/x86_64/latest/${1}_libretro.so.zip && unzip ${1}_libretro.so.zip && rm ${1}_libretro.so.zip
+}
+
+download_core mame2000
+download_core mame2003
+download_core mame2003_plus
+download_core mame2010_libretro
+
+# consider packages
+# from libretro
+# bluez-libs-5.55-1 bluez-libs-5.55-1  enet-1.3.16-1  fmt-7.1.3-1  libzip-1.7.3-1  mbedtls-2.16.7-1
+#             miniupnpc-2.1.20191224-3  minizip-1:1.2.11-4  snappy-1.1.8-2
+# 	libretro-scummvm
 # echo ""
 # echo "Setting MAME (autologin) account..."
-# # Mount Windwos partition to /media/windows
-# mkdir -p /media/windows
 
-# echo "# Mount WindowsXP Partition" >> /etc/fstab
-# echo "/dev/sda1		/media/windows		ntfs	ro	0 2" >> /etc/fstab
