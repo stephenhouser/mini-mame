@@ -179,11 +179,37 @@ cat > ~/.config/retroarch/retroarch.cfg << EOF
 audio_filter_dir = "/usr/lib/retroarch/filters/audio"
 video_filter_dir = "/usr/lib/retroarch/filters/video"
 libretro_info_path = "/usr/share/libretro/info"
-config_save_on_exit = "true"
-assets_directory = "~/.config/retroarch/assets"
+
 libretro_directory = "~/.config/retroarch/cores"
-menu_show_core_updater = "true"
+assets_directory = "~/.config/retroarch/assets"
+log_dir = "~/.config/retroarch/logs"
 video_shader_dir = "~/.config/retroarch/shaders"
+cheat_database_path = "~/.config/retroarch/cheats"
+cursor_directory = "~/.config/retroarch/database/cursors"
+input_remapping_directory = "~/.config/retroarch/config/remaps"
+savefile_directory = "~/.config/retroarch/saves"
+savestate_directory = "~/.config/retroarch/states"
+screenshot_directory = "~/.config/retroarch/screenshots"
+system_directory = "~/.config/retroarch/system"
+thumbnails_directory = "~/.config/retroarch/thumbnails"
+video_layout_directory = "~/.config/retroarch/layouts"
+
+content_database_path = "~/.config/retroarch/database/rdb"
+content_favorites_path = "~/.config/retroarch/content_favorites.lpl"
+content_history_path = "~/.config/retroarch/content_history.lpl"
+content_image_history_path = "~/.config/retroarch/content_image_history.lpl"
+content_music_history_path = "~/.config/retroarch/content_music_history.lpl"
+content_video_history_path = "~/.config/retroarch/content_video_history.lpl"
+core_updater_buildbot_assets_url = "http://buildbot.libretro.com/assets/"
+core_updater_buildbot_cores_url = "http://buildbot.libretro.com/nightly/linux/x86_64/latest/"
+
+libretro_log_level = "1"
+menu_show_core_updater = "true"
+config_save_on_exit = "true"
+autosave_interval = "600"
+video_threaded = "true"
+audio_driver = "alsa"
+audio_out_rate = "48000"
 EOF
 
 # Download MAME 2000, MAME 2003+, and MAME 2010 cores for RetroARch / LibRetro
@@ -197,7 +223,11 @@ function download_core() {
 download_core mame2000
 download_core mame2003
 download_core mame2003_plus
-download_core mame2010_libretro
+download_core mame2010
+#download_core mame2015	# not available in latest build (url above)
+#download_core mame2016 # not available in latest build (url above)
+#download_core mame		# not available in latest build (url above)
+download_core scummvm
 
 # consider packages
 # from libretro
