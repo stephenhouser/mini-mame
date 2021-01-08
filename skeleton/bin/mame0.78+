@@ -1,2 +1,2 @@
 #!/bin/bash
-exec retroarch -L /usr/lib/libretro//mame2000_libretro.so ~/mame0.78+/roms/$*
+exec /usr/bin/retroarch -L /usr/lib/libretro//mame2000_libretro.so ~/mame0.78+/roms/$*

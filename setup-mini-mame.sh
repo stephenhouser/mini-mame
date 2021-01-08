@@ -38,8 +38,8 @@ awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 
 sudo mv /tmp/pacman.conf.$$ /etc/pacman.conf
 
 # Full system update and upgrade to latest rolling release!
-sudo pacman -Syy			# update package indicies
-sudo pacman -Syu			# upgrade the packages.
+sudo pacman -Syy --noconfirm		# update package indicies
+sudo pacman -Syu --noconfirm 		# upgrade the packages.
 
 # Base system tools
 # xorg				-- X windows
@@ -79,6 +79,8 @@ amixer sset Headphone '100%'
 #systemctl enable cdemu-daemon.service
 
 
+echo ""
+echo "Install and configure RetroArch (MAME)..."
 # Mutliple Arcade Machine Emulator via RetroArch
 # mame				-- the emulator; use this just to have a mame exe around
 # retroarch			-- frontend and CLI for libretro and launching cores
@@ -91,18 +93,20 @@ amixer sset Headphone '100%'
 # basic install as I don't use the frontend of RetroArch, I just want the
 # ability to use it to launch the libretro-mame games and get the nice
 # benefits of libretro.
-sudo pacman -S retroarch libretro-core-info libretro-overlays retroarch-assets-xmb
+sudo pacman -S --noconfirm \
+	retroarch libretro-core-info libretro-overlays retroarch-assets-xmb
 
 # Run one time to get the template configuration setup
 sudo retroarch
 
+# Make directory for libretro cores (not created by default)
 sudo mkdir /usr/lib/libretro
 sudo chgrp wheel /usr/lib/libretro
 sudo chmod g+ws /usr/lib/libretro
 
-#sed -i 's|/usr/lib/libretro|~/.config/retroarch/cores|' ~/.config/retroarch/retroarch.cfg
+# Change some retroarch settings to my liking
 sed -i 's|menu_show_core_updater = "false"|menu_show_core_updater = "true"|' ~/.config/retroarch/retroarch.cfg
-sed -i 's|audio_driver = "pulse"|audio_driver = "alsa"|' ~/.config/retroarch/retroarch.cfg
+#sed -i 's|audio_driver = "pulse"|audio_driver = "alsa"|' ~/.config/retroarch/retroarch.cfg
 sed -i 's|video_threaded = "false"|video_threaded = "true"|' ~/.config/retroarch/retroarch.cfg
 sed -i 's|video_fullscreen = "false"|video_fullscreen = "true"|' ~/.config/retroarch/retroarch.cfg
 
@@ -125,6 +129,7 @@ download_core mame2010
 # for Kids games... testing
 download_core scummvm
 
+
 echo ""
 echo "Install AUR source packages..."
 mkdir -p src
@@ -132,7 +137,7 @@ mkdir -p src
 # Install/build MAME from AUR -- USE SPECIFIC VERSION 0.227
 echo ""
 echo "Install MAME (arcade games)..."
-sudo pacman -S mame
+sudo pacman -S --noconfirm mame
 # git clone https://aur.archlinux.org/mame-git.git ~/src/mame
 # cd ~/src/mame
 # sed -i 's|https://github.com/mamedev/mame.git|https://github.com/mamedev/mame.git#tag=mame0227|' PKGBUILD
@@ -143,7 +148,7 @@ sudo pacman -S mame
 # Uses git://github.com/DavidGriffith/daphne.git
 echo ""
 echo "Install Daphne (laser disc games)..."
-git clone https://aur.archlinux.org/daphne-git.git ~src/daphne
+git clone https://aur.archlinux.org/daphne-git.git ~/src/daphne
 cd ~/src/daphne
 makepkg -si
 cd ~
@@ -152,7 +157,7 @@ cd ~
 echo ""
 echo "Install Attract Mode (menu frontend for launching games)..."
 git clone https://aur.archlinux.org/attract-git.git ~/src/attract
-cd ~src/attract
+cd ~/src/attract
 makepkg -si
 cd ~
 
