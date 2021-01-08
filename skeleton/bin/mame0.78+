@@ -1,0 +1,2 @@
+#!/bin/bash
+exec retroarch -L ~/.config/retroarch/cores/mame2000_libretro.so ~/mame0.78+/roms/$*
