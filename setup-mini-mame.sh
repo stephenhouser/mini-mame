@@ -7,6 +7,10 @@
 # 2020/12/31 - Stephen Houser <stephenhouser@gmail.com>
 #
 
+# consider packages
+# from libretro
+# bluez-libs-5.55-1 bluez-libs-5.55-1  enet-1.3.16-1  fmt-7.1.3-1  libzip-1.7.3-1  mbedtls-2.16.7-1 miniupnpc-2.1.20191224-3  minizip-1:1.2.11-4  snappy-1.1.8-2
+
 mame_user=mame
 mame_password=mame
 
@@ -57,11 +61,11 @@ sudo pacman --noconfirm -S \
 echo ""
 echo "Unmute ALSA Audio..."
 amixer sset Master unmute
-amixer sset Master '75%'
+amixer sset Master '100%'
 amixer sset Speaker unmute
-amixer sset Speaker '75%'
+amixer sset Speaker '100%'
 amixer sset Headphone unmute
-amixer sset Headphone '75%'
+amixer sset Headphone '100%'
 
 # lwm				-- super tiny window manager that only managers windows!
 # xorg-twm			-- minimal window manager
@@ -74,102 +78,19 @@ amixer sset Headphone '75%'
 #pacman --noconform -S cdemu-client vhba-module
 #systemctl enable cdemu-daemon.service
 
-# Microsoft Windows things...
-# https://wiki.archlinux.org/index.php/Wine
-# wine				-- not an emulator of windoes
-# winetricks		-- for setting things up easier
-# wine-mono			-- .NET framework
-# wine-gecko		-- Internet Explorer widgets
-# lib32-alsa-lib	-- for 32-bit windows
-# lib32-libpulse	-- for 32-bit windows
-# lib32-mpg123		-- MP3 for wine
-# lib32-giflib		-- GIF for wine
-# lib32-libpng		-- PNG for wine
-sudo pacman --noconfirm -S \
-	wine winetricks wine-mono wine-gecko \
-	lib32-alsa-lib lib32-libpulse \
-	lib32-mpg123 lib32-giflib lib32-libpng
 
-# to get a cmd prompt ... $ wineconsole cmd
-# winetricks windowscodecs
-
-# Copy in dot files
-echo ""
-echo "Setup dot files..."
-rsync -avz ./skeleton/ ${HOME}
-
-cat >> ${HOME}/.zshrc << EOF
-export EDITOR='vim'
-export PAGER=`which less`
-#export LESS="-eFRX -x4"
-#export MORE="-eFRX -x4"
-#export MANPAGER="$PAGER -isX"
-
-alias vi=vim
-alias ls='ls --color=auto'
-
-if [ -d "${HOME}/bin" ] ; then
-        PATH="${HOME}/bin:$PATH"
-fi
-EOF
-
-echo ""
-echo "Setting autologin account..."
-# Enable automatic login to the console
-# https://wiki.archlinux.org/index.php/Getty
-echo ""
-echo "Enable auto-login as ${USER}..."
-cat >> /tmp/override.conf.$$ << EOF
-[Service]
-ExecStart=
-ExecStart=-/usr/bin/agetty --autologin ${USER} --noclear %I $TERM
-EOF
-sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
-sudo mv /tmp/override.conf.$$ /etc/systemd/system/getty@tty1.service.d/override.conf
-
-echo ""
-echo "You still need need to run `wine` and `winecfg` under X to configure Wine"
-echo "	startx /usr/bin/wine progman"
-echo "	startx /usr/bin/winecfg"
-echo "and install any packages it asks to install."
-echo ""
-
-# Mutliple Arcade Machine Emulator
-# mame				-- the emulator
-# pacman --noconfirm -S mame
-
-mkdir -p src
-cd src
-
-# Install/build MAME from AUR -- USE SPECIFIC VERSION 0.227
-# git clone https://aur.archlinux.org/mame-git.git mame
-# cd mame
-# sed -i 's|https://github.com/mamedev/mame.git|https://github.com/mamedev/mame.git#tag=mame0227|' PKGBUILD
-# makepkg -si
-# cd ..
-
-# Install/build attract mode from AUR
-# Uses git://github.com/DavidGriffith/daphne.git
-# git clone https://aur.archlinux.org/daphne-git.git
-# cd daphne
-# makepkg -si
-# cd ..
-
-# Install/build attract mode from AUR
-git clone https://aur.archlinux.org/attract-git.git
-cd attract
-makepkg -si
-cd ../..
-
-# Using old Kids-MAME Windows directory...
-# Mount Windwos partition to /media/windows
-mkdir -p /media/windows
-echo "# Mount WindowsXP Partition" >> /etc/fstab
-echo "/dev/sda1		/media/windows		ntfs	ro	0 2" >> /etc/fstab
+# Mutliple Arcade Machine Emulator via RetroArch
+# mame				-- the emulator; use this just to have a mame exe around
+# retroarch			-- frontend and CLI for libretro and launching cores
+# libretro-core-info	-- needed by retroarch to run cores
+# libretro-overlays		-- graphic overlays
+# retroarch-assets-xmb	-- graphic elements of retroarch UI
 
 # Install RetroArch -- really for libretro and the "cores" that will allow
-# running earlier versions of MAME arcade games
-
+# running earlier versions of MAME arcade games. This is just a very
+# basic install as I don't use the frontend of RetroArch, I just want the
+# ability to use it to launch the libretro-mame games and get the nice
+# benefits of libretro.
 sudo pacman -S retroarch libretro-core-info libretro-overlays retroarch-assets-xmb
 
 # Run one time to get the template configuration setup
@@ -213,6 +134,7 @@ audio_out_rate = "48000"
 EOF
 
 # Download MAME 2000, MAME 2003+, and MAME 2010 cores for RetroARch / LibRetro
+mkdir -p ~/.config/retroarch/cores
 cd ~/.config/retroarch/cores
 
 function download_core() {
@@ -227,13 +149,108 @@ download_core mame2010
 #download_core mame2015	# not available in latest build (url above)
 #download_core mame2016 # not available in latest build (url above)
 #download_core mame		# not available in latest build (url above)
+
+# for Kids games... testing
 download_core scummvm
 
-# consider packages
-# from libretro
-# bluez-libs-5.55-1 bluez-libs-5.55-1  enet-1.3.16-1  fmt-7.1.3-1  libzip-1.7.3-1  mbedtls-2.16.7-1
-#             miniupnpc-2.1.20191224-3  minizip-1:1.2.11-4  snappy-1.1.8-2
-# 	libretro-scummvm
-# echo ""
-# echo "Setting MAME (autologin) account..."
+echo ""
+echo "Install AUR source packages..."
+mkdir -p src
 
+# Install/build MAME from AUR -- USE SPECIFIC VERSION 0.227
+echo ""
+echo "Install MAME (arcade games)..."
+sudo pacman -S mame
+# git clone https://aur.archlinux.org/mame-git.git ~/src/mame
+# cd ~/src/mame
+# sed -i 's|https://github.com/mamedev/mame.git|https://github.com/mamedev/mame.git#tag=mame0227|' PKGBUILD
+# makepkg -si
+# cd ..
+
+# Install/build attract mode from AUR
+# Uses git://github.com/DavidGriffith/daphne.git
+echo ""
+echo "Install Daphne (laser disc games)..."
+git clone https://aur.archlinux.org/daphne-git.git ~src/daphne
+cd ~/src/daphne
+makepkg -si
+cd ~
+
+# Install/build attract mode from AUR
+echo ""
+echo "Install Attract Mode (menu frontend for launching games)..."
+git clone https://aur.archlinux.org/attract-git.git ~/src/attract
+cd ~src/attract
+makepkg -si
+cd ~
+
+
+# Microsoft Windows things...
+# https://wiki.archlinux.org/index.php/Wine
+# wine				-- not an emulator of windoes
+# winetricks		-- for setting things up easier
+# wine-mono			-- .NET framework
+# wine-gecko		-- Internet Explorer widgets
+# lib32-alsa-lib	-- for 32-bit windows
+# lib32-libpulse	-- for 32-bit windows
+# lib32-mpg123		-- MP3 for wine
+# lib32-giflib		-- GIF for wine
+# lib32-libpng		-- PNG for wine
+sudo pacman --noconfirm -S \
+	wine winetricks wine-mono wine-gecko \
+	lib32-alsa-lib lib32-libpulse \
+	lib32-mpg123 lib32-giflib lib32-libpng
+
+# to get a cmd prompt ... $ wineconsole cmd
+# winetricks windowscodecs
+
+# Using old Kids-MAME Windows directory...
+# Mount Windwos partition to /media/windows
+mkdir -p /media/windows
+echo "# Mount WindowsXP Partition" >> /etc/fstab
+echo "/dev/sda1		/media/windows		ntfs	ro	0 2" >> /etc/fstab
+
+echo ""
+echo "*** Windows Games ***"
+echo ""
+echo "You still need need to run `wine` and `winecfg` under X to configure Wine"
+echo "	startx /usr/bin/wine progman"
+echo "	startx /usr/bin/winecfg"
+echo "and install any packages it asks to install."
+echo ""
+
+
+# Copy in dot files *after* everything else so we can overlay our
+# configs onto the default ones created above...
+echo ""
+echo "Setup dot files..."
+rsync -avz ./skeleton/ ${HOME}
+
+cat >> ${HOME}/.zshrc << EOF
+export EDITOR='vim'
+export PAGER=`which less`
+#export LESS="-eFRX -x4"
+#export MORE="-eFRX -x4"
+#export MANPAGER="$PAGER -isX"
+
+alias vi=vim
+alias ls='ls --color=auto'
+
+if [ -d "${HOME}/bin" ] ; then
+        PATH="${HOME}/bin:$PATH"
+fi
+EOF
+
+echo ""
+echo "Setting autologin account..."
+# Enable automatic login to the console
+# https://wiki.archlinux.org/index.php/Getty
+echo ""
+echo "Enable auto-login as ${USER}..."
+cat >> /tmp/override.conf.$$ << EOF
+[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin ${USER} --noclear %I $TERM
+EOF
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
+sudo mv /tmp/override.conf.$$ /etc/systemd/system/getty@tty1.service.d/override.conf
