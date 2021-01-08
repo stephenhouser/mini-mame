@@ -96,50 +96,22 @@ sudo pacman -S retroarch libretro-core-info libretro-overlays retroarch-assets-x
 # Run one time to get the template configuration setup
 sudo retroarch
 
-cat > ~/.config/retroarch/retroarch.cfg << EOF
-audio_filter_dir = "/usr/lib/retroarch/filters/audio"
-video_filter_dir = "/usr/lib/retroarch/filters/video"
-libretro_info_path = "/usr/share/libretro/info"
+sudo mkdir /usr/lib/libretro
+sudo chgrp wheel /usr/lib/libretro
+sudo chmod g+ws /usr/lib/libretro
 
-libretro_directory = "~/.config/retroarch/cores"
-assets_directory = "~/.config/retroarch/assets"
-log_dir = "~/.config/retroarch/logs"
-video_shader_dir = "~/.config/retroarch/shaders"
-cheat_database_path = "~/.config/retroarch/cheats"
-cursor_directory = "~/.config/retroarch/database/cursors"
-input_remapping_directory = "~/.config/retroarch/config/remaps"
-savefile_directory = "~/.config/retroarch/saves"
-savestate_directory = "~/.config/retroarch/states"
-screenshot_directory = "~/.config/retroarch/screenshots"
-system_directory = "~/.config/retroarch/system"
-thumbnails_directory = "~/.config/retroarch/thumbnails"
-video_layout_directory = "~/.config/retroarch/layouts"
-
-content_database_path = "~/.config/retroarch/database/rdb"
-content_favorites_path = "~/.config/retroarch/content_favorites.lpl"
-content_history_path = "~/.config/retroarch/content_history.lpl"
-content_image_history_path = "~/.config/retroarch/content_image_history.lpl"
-content_music_history_path = "~/.config/retroarch/content_music_history.lpl"
-content_video_history_path = "~/.config/retroarch/content_video_history.lpl"
-core_updater_buildbot_assets_url = "http://buildbot.libretro.com/assets/"
-core_updater_buildbot_cores_url = "http://buildbot.libretro.com/nightly/linux/x86_64/latest/"
-
-libretro_log_level = "1"
-menu_show_core_updater = "true"
-config_save_on_exit = "true"
-autosave_interval = "600"
-video_threaded = "true"
-audio_driver = "alsa"
-audio_out_rate = "48000"
-EOF
+#sed -i 's|/usr/lib/libretro|~/.config/retroarch/cores|' ~/.config/retroarch/retroarch.cfg
+sed -i 's|menu_show_core_updater = "false"|menu_show_core_updater = "true"|' ~/.config/retroarch/retroarch.cfg
+sed -i 's|audio_driver = "pulse"|audio_driver = "alsa"|' ~/.config/retroarch/retroarch.cfg
+sed -i 's|video_threaded = "false"|video_threaded = "true"|' ~/.config/retroarch/retroarch.cfg
+sed -i 's|video_fullscreen = "false"|video_fullscreen = "true"|' ~/.config/retroarch/retroarch.cfg
 
 # Download MAME 2000, MAME 2003+, and MAME 2010 cores for RetroARch / LibRetro
-mkdir -p ~/.config/retroarch/cores
-cd ~/.config/retroarch/cores
-
 function download_core() {
+	cd /usr/lib/libretro
 	rm -f ${1}
 	wget http://buildbot.libretro.com/nightly/linux/x86_64/latest/${1}_libretro.so.zip && unzip ${1}_libretro.so.zip && rm ${1}_libretro.so.zip
+	cd -
 }
 
 download_core mame2000
