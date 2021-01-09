@@ -42,7 +42,7 @@ _Arch Linux_ provides a lightweight configurable base without a lot of extra cru
 
 3. As the `mame` or `arcade` user, run `bootstrap.sh` to install and configure most of the stuff needed. Perferably do this _at the console_ as some of the steps might open up a window and require attention. All this stuff is after all designed to be run at the console.
 
-4.
+4. Run `startx /usr/bin/wine progman` and `startx /usr/bin/winecfg` get wine to build it's directory structure
 
 Scripts for setting up mini-mame arcade machine with Arch Linux
 

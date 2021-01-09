@@ -106,6 +106,7 @@ sudo chmod g+ws /usr/lib/libretro
 
 # Change some retroarch settings to my liking
 sed -i 's|menu_show_core_updater = "false"|menu_show_core_updater = "true"|' ~/.config/retroarch/retroarch.cfg
+# Leave audio as pulse otherwise I get no sound in games when launching from attract mode as X manager
 #sed -i 's|audio_driver = "pulse"|audio_driver = "alsa"|' ~/.config/retroarch/retroarch.cfg
 sed -i 's|video_threaded = "false"|video_threaded = "true"|' ~/.config/retroarch/retroarch.cfg
 sed -i 's|video_fullscreen = "false"|video_fullscreen = "true"|' ~/.config/retroarch/retroarch.cfg
@@ -125,8 +126,6 @@ download_core mame2010
 #download_core mame2015	# not available in latest build (url above)
 #download_core mame2016 # not available in latest build (url above)
 #download_core mame		# not available in latest build (url above)
-
-# for Kids games... testing
 download_core scummvm
 
 
@@ -136,7 +135,7 @@ mkdir -p src
 
 # Install/build MAME from AUR -- USE SPECIFIC VERSION 0.227
 echo ""
-echo "Install MAME (arcade games)..."
+echo "Install Current MAME (arcade games)..."
 sudo pacman -S --noconfirm mame
 # git clone https://aur.archlinux.org/mame-git.git ~/src/mame
 # cd ~/src/mame
@@ -183,12 +182,9 @@ sudo pacman --noconfirm -S \
 
 # Using old Kids-MAME Windows directory...
 # Mount Windwos partition to /media/windows
-mkdir -p /media/windows
-echo "# Mount WindowsXP Partition" >> /etc/fstab
-echo "/dev/sda1		/media/windows		ntfs	ro	0 2" >> /etc/fstab
-
-#sudo chgrp wheel /media/cdrom
-#sudo chmod g+w /media/cdrom
+# mkdir -p /media/windows
+# echo "# Mount WindowsXP Partition" >> /etc/fstab
+# echo "/dev/sda1		/media/windows		ntfs	ro	0 2" >> /etc/fstab
 
 echo ""
 echo "*** Windows Games ***"
