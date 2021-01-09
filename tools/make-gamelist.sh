@@ -7,3 +7,10 @@ for g in $(cat mame.txt | cut -d\; -f1); do
 		echo MISSING: $g
 	fi
 done
+
+
+for g in $(cat mame.tag); do
+	if grep "^${g}\;" mame0.78+.txt; then
+		echo ${g} >> mame0.78+.tag
+	fi
+done

@@ -18,15 +18,24 @@ freddie3:Freddie Fish 3.iso:freddi3.exe:640x480
 freddie4:Freddie Fish 4.iso:freddi4.exe:640x480
 freddie5:Freddie Fish 5.iso:freddi5.exe:640x480
 "
-game_path="/media/windows/Games/Software"
-wine_drive="d:"
-
+game_path="/media/windows/Games/Windows"
+wine_drive="g:"
 
 game=$1
-if ! echo "${game_list}" | grep "^${game}:"; then
-	echo "ERROR: Cannot find game named [${game}]."
+game_line=$(echo "${game_list}" | grep "^${game}:")
+if [ -z "${game_line}" ]; then
+	game_line=$(echo "${game_list}" | grep ":${game}:")
+fi
+
+if [ -z "${game_line}" ]; then
+	echo "ERROR: Game [${game}] not found."
 	exit 1
 fi
+
+iso_file=$(echo "${game_line}" | cut -d: -f2)
+exe_file=$(echo "${game_line}" | cut -d: -f3)
+display_mode=$(echo "${game_line}" | cut -d: -f4)
+
 
 mapped_drive=~/.wine/dosdevices/${wine_drive}
 
@@ -39,16 +48,13 @@ if [ ! -d ${mapped_drive} ]; then
 fi
 
 # Mount ISO image to Wine Drive
-iso_file=$(echo "${game_list}" | grep "^${game}:" | cut -d: -f2)
 iso_path=${game_path}/${iso_file}
 if [ -f "${iso_path}" ]; then
 	fuseiso "${iso_path}" ${mapped_drive}
 
-	exe_file=$(echo "${game_list}" | grep "^${game}:" | cut -d: -f3)
 	exe_path=${mapped_drive}/${exe_file}
 	if [ -f ${exe_path} ]; then
 		# Change screen to resolution for game...
-		display_mode=$(echo "${game_list}" | grep "^${game}:" | cut -d: -f4)
 		active_output=$(xrandr -q | sed -n 's/^\(.*\)\( connected.*\)$/\1/p')
 		xrandr --output ${active_output} --mode ${display_mode}
 		# Start the game in wine...

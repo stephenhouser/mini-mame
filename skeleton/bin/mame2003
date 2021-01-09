@@ -1,2 +1,0 @@
-#!/bin/bash
-exec /usr/bin/retroarch -L /usr/lib/libretro//mame2003_libretro.so ~/mame0.78/roms/$*

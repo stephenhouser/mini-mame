@@ -1,2 +1,1 @@
-#!/bin/bash
-exec /usr/bin/retroarch -L /usr/lib/libretro//mame2003_plus_libretro.so ~/mame0.78+/$*
+mame0.78+

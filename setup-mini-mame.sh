@@ -187,6 +187,9 @@ mkdir -p /media/windows
 echo "# Mount WindowsXP Partition" >> /etc/fstab
 echo "/dev/sda1		/media/windows		ntfs	ro	0 2" >> /etc/fstab
 
+#sudo chgrp wheel /media/cdrom
+#sudo chmod g+w /media/cdrom
+
 echo ""
 echo "*** Windows Games ***"
 echo ""
