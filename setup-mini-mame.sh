@@ -30,13 +30,6 @@ fi
 # 	exit 1
 # fi
 
-# Enable multilib to get wine
-echo ""
-echo "Updating system... (adding multilib for Wine)..."
-sudo cp /etc/pacman.conf /etc/pacman.conf.bak
-awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf > /tmp/pacman.conf.$$
-sudo mv /tmp/pacman.conf.$$ /etc/pacman.conf
-
 # Full system update and upgrade to latest rolling release!
 sudo pacman -Syy --noconfirm		# update package indicies
 sudo pacman -Syu --noconfirm 		# upgrade the packages.
@@ -172,6 +165,15 @@ cd ~
 # lib32-mpg123		-- MP3 for wine
 # lib32-giflib		-- GIF for wine
 # lib32-libpng		-- PNG for wine
+# Enable multilib to get wine
+echo ""
+echo "Updating system... (adding multilib for Wine)..."
+sudo cp /etc/pacman.conf /etc/pacman.conf.bak
+awk '/^#\[multilib\]$/ {sub("#",""); print; getline; sub("#",""); print; next;} 1' < /etc/pacman.conf > /tmp/pacman.conf.$$
+sudo mv /tmp/pacman.conf.$$ /etc/pacman.conf
+
+sudo pacman -Syy --noconfirm		# update package indicies
+
 sudo pacman --noconfirm -S \
 	wine winetricks wine-mono wine-gecko \
 	lib32-alsa-lib lib32-libpulse \
@@ -203,17 +205,11 @@ echo "Setup dot files..."
 rsync -avz ./skeleton/ ${HOME}
 
 cat >> ${HOME}/.zshrc << EOF
-export EDITOR='vim'
-export PAGER=`which less`
-#export LESS="-eFRX -x4"
-#export MORE="-eFRX -x4"
-#export MANPAGER="$PAGER -isX"
-
 alias vi=vim
-alias ls='ls --color=auto'
+#alias ls='ls --color=auto'
 
-if [ -d "${HOME}/bin" ] ; then
-        PATH="${HOME}/bin:$PATH"
+if [ -d "\${HOME}/bin" ] ; then
+        PATH="\$HOME}/bin:$PATH"
 fi
 EOF
 
