@@ -87,22 +87,21 @@ echo "Install and configure RetroArch (MAME)..."
 # ability to use it to launch the libretro-mame games and get the nice
 # benefits of libretro.
 sudo pacman -S --noconfirm \
-	retroarch libretro-core-info libretro-overlays retroarch-assets-xmb
+	retroarch libretro-core-info libretro-overlays retroarch-assets-ozone
 
 # Run one time to get the template configuration setup
-sudo retroarch
+#sudo retroarch
+# Change some retroarch settings to my liking
+#sed -i 's|menu_show_core_updater = "false"|menu_show_core_updater = "true"|' ~/.config/retroarch/retroarch.cfg
+# Leave audio as pulse otherwise I get no sound in games when launching from attract mode as X manager
+##sed -i 's|audio_driver = "pulse"|audio_driver = "alsa"|' ~/.config/retroarch/retroarch.cfg
+#sed -i 's|video_threaded = "false"|video_threaded = "true"|' ~/.config/retroarch/retroarch.cfg
+#sed -i 's|video_fullscreen = "false"|video_fullscreen = "true"|' ~/.config/retroarch/retroarch.cfg
 
 # Make directory for libretro cores (not created by default)
 sudo mkdir /usr/lib/libretro
 sudo chgrp wheel /usr/lib/libretro
 sudo chmod g+ws /usr/lib/libretro
-
-# Change some retroarch settings to my liking
-sed -i 's|menu_show_core_updater = "false"|menu_show_core_updater = "true"|' ~/.config/retroarch/retroarch.cfg
-# Leave audio as pulse otherwise I get no sound in games when launching from attract mode as X manager
-#sed -i 's|audio_driver = "pulse"|audio_driver = "alsa"|' ~/.config/retroarch/retroarch.cfg
-sed -i 's|video_threaded = "false"|video_threaded = "true"|' ~/.config/retroarch/retroarch.cfg
-sed -i 's|video_fullscreen = "false"|video_fullscreen = "true"|' ~/.config/retroarch/retroarch.cfg
 
 # Download MAME 2000, MAME 2003+, and MAME 2010 cores for RetroARch / LibRetro
 function download_core() {
@@ -121,6 +120,13 @@ download_core mame2010
 #download_core mame		# not available in latest build (url above)
 download_core scummvm
 
+
+echo ""
+echo "*** RetroArch Games ***"
+echo ""
+echo "It would be a really good idea to run RetroArch and update assets and such"
+echo "    startx /usr/bin/retroarch"
+echo ""
 
 echo ""
 echo "Install AUR source packages..."
@@ -191,7 +197,7 @@ sudo pacman --noconfirm -S \
 echo ""
 echo "*** Windows Games ***"
 echo ""
-echo "You still need need to run `wine` and `winecfg` under X to configure Wine"
+echo "You still need need to run 'wine' and 'winecfg' under X to configure Wine"
 echo "	startx /usr/bin/wine progman"
 echo "	startx /usr/bin/winecfg"
 echo "and install any packages it asks to install."
@@ -202,6 +208,8 @@ echo ""
 # configs onto the default ones created above...
 echo ""
 echo "Setup dot files..."
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd ${dir}
 rsync -avz ./skeleton/ ${HOME}
 
 cat >> ${HOME}/.zshrc << EOF
