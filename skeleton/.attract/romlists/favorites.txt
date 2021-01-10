@@ -1,2 +1,6 @@
 #Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons;Series;Language;Region;Rating
+defender;Defender (Red label);mame0.37b5;;1980;Williams;;;;;;0;;;;;;;;;
+dkong;Donkey Kong (US);mame0.37b5;;1981;Nintendo of America;;;;;;0;;;;;;;;;
+mspacman;Ms. Pac-Man;mame0.37b5;;1981;bootleg;;;;;;0;;;;;;;;;
+pacmanm;Pac-Man (Midway);mame0.37b5;pacman;1980;[Namco] (Midway license);;;;;;0;;pacman;;;;;;;
 pajama-win;Pajama Sam 1;scummvm;;;;;;;;;;;;;;;;;
