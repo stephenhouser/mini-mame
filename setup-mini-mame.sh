@@ -140,7 +140,7 @@ sudo pacman -S --noconfirm mame
 # cd ~/src/mame
 # sed -i 's|https://github.com/mamedev/mame.git|https://github.com/mamedev/mame.git#tag=mame0227|' PKGBUILD
 # makepkg -si
-# cd ..
+# cd -
 
 # Install/build attract mode from AUR
 # Uses git://github.com/DavidGriffith/daphne.git
@@ -149,7 +149,7 @@ echo "Install Daphne (laser disc games)..."
 git clone https://aur.archlinux.org/daphne-git.git ~/src/daphne
 cd ~/src/daphne
 makepkg -si
-cd ~
+cd -
 
 # Install/build attract mode from AUR
 echo ""
@@ -157,7 +157,7 @@ echo "Install Attract Mode (menu frontend for launching games)..."
 git clone https://aur.archlinux.org/attract-git.git ~/src/attract
 cd ~/src/attract
 makepkg -si
-cd ~
+cd -
 
 
 # Microsoft Windows things...
@@ -208,8 +208,8 @@ echo ""
 # configs onto the default ones created above...
 echo ""
 echo "Setup dot files..."
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd ${dir}
+#DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+#cd ${dir}
 rsync -avz ./skeleton/ ${HOME}
 
 cat >> ${HOME}/.zshrc << EOF
