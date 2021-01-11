@@ -10,7 +10,6 @@ freddi5;Freddi Fish 5: The Case of the Creature of Coral Cove;scummvm;;;;;;;;;;;
 puttputt1;Putt-Putt Joins the Parade;scummvm;;;;;;;;;;;;;;;;;
 puttputt3;Putt-Putt Saves the Zoo;scummvm;;;;;;;;;;;;;;;;;
 puttputt4;Putt-Putt Travels Through Time;scummvm;;;;;;;;;;;;;;;;;
-#puttputt5;Putt-Putt Enters the Race;scummvm;;;;;;;;;;;;;;;;;
 puttputt6;Putt-Putt Joins the Circus;scummvm;;;;;;;;;;;;;;;;;
 puttputt_baloon;Putt-Putt and Pep's Baloon-O-Rama;scummvm;;;;;;;;;;;;;;;;;
 
