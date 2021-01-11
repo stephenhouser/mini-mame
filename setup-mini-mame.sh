@@ -146,9 +146,9 @@ sudo pacman -S --noconfirm mame
 # Uses git://github.com/DavidGriffith/daphne.git
 echo ""
 echo "Install Daphne (laser disc games)..."
-git clone https://aur.archlinux.org/daphne-git.git ~/src/daphne
+git clone https://github.com/stephenhouser/daphne-git.git ~/src/daphne
 cd ~/src/daphne
-makepkg -si
+makepkg -si --noconfirm
 cd -
 
 # Install/build attract mode from AUR
@@ -156,7 +156,7 @@ echo ""
 echo "Install Attract Mode (menu frontend for launching games)..."
 git clone https://aur.archlinux.org/attract-git.git ~/src/attract
 cd ~/src/attract
-makepkg -si
+makepkg -si --noconfirm
 cd -
 
 
