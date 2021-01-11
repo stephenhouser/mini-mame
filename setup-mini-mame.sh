@@ -146,7 +146,7 @@ sudo pacman -S --noconfirm mame
 # Uses git://github.com/DavidGriffith/daphne.git
 echo ""
 echo "Install Daphne (laser disc games)..."
-git clone https://github.com/stephenhouser/daphne-git.git ~/src/daphne
+git clone https://github.com/stephenhouser/arch-daphne-git.git ~/src/daphne
 cd ~/src/daphne
 makepkg -si --noconfirm
 cd -
