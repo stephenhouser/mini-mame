@@ -63,7 +63,6 @@ rampart;Rampart (Current);mame;;1990;Atari Games;;3;0;trackball,trackball,trackb
 rastan;Rastan (Current);mame;;1987;Taito Corporation Japan;;2;0;joystick (8-way),joystick (8-way);good;1;raster;;;;2;;;;
 roadblst;Road Blasters (Current);mame;;1987;Atari Games;;1;0;joystick (analog),pedal;good;1;raster;atarisy1;;;3;;;;
 robotron;Robotron: 2084 (Current);mame;;1982;Williams / Vid Kidz;;1;0;double joystick;good;1;raster;;;;;;;;
-rrvac;Ridge Racer V Arcade Battle (Current);mame;;2001;Namco;;0;0;;preliminary;1;raster;sys246;;chd;;;;;
 seawolf;Sea Wolf (Current);mame;;1976;Dave Nutting Associates / Midway;;1;0;positional;imperfect;1;raster;;;;1;;;;
 sf;Street Fighter (Current);mame;;1987;Capcom;;2;0;joystick (8-way),joystick (8-way);good;1;raster;;;;6;;;;
 sfrush;San Francisco Rush (Current);mame;;1996;Atari Games;;4;0;paddle,pedal,only_buttons,joystick (8-way),joystick (8-way);good;1;raster;;;chd;13;;;;
