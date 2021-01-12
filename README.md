@@ -11,6 +11,71 @@ Configuration and setup for a "retro arcade computer", other wise known as _Kids
 * [Daphne](https://daphne-emu.com) for running Laser Disc based games (Space Ace)
 * [Arch Linux](https://archlinux.org) as the base operating system.
 
+## Directory Structure
+
+```
+/home/mame
+    .attract            -- attract mode configuration
+        attract.cfg     -- main config for attract mode
+        emulators       -- config files for each emulator, how to launch
+            *.cfg
+        romlists        -- lists of games to display
+            *.txt       -- semi-colon separated database for each display
+            *.tag       -- flagged favorites for each display
+
+        layout          -- extra downloaded layouts
+        modules         -- extra downloaded modules
+
+    .config/retroarch   -- RetroArch (libretro) configuration
+        retroarch.cfg   -- main config for retroarch
+
+        config          -- libretro configuration for each core (*.opt)
+            MAME        -- for Current MAME (v0.227)
+            MAME2000    -- for MAME v0.37b5
+            scummvm     -- for ScummVM
+        system          -- Where cores store their own internal data/options
+            mame2000    -- MAME 2000 (0.37b5) option files
+            mame2003    -- MAME 2003 (0.78+) option files
+            scummvm.ini -- ScummVM config (list of games and how to launch)
+
+    daphne1.0           -- see daphne below, v1.0 files
+    mame0.37b5          -- see mame below, 0.37b5 files
+    mame0.78+           -- see mame below, 0.78+ files
+    mame0.227           -- see mame below, 0.227 files
+    scummvm2.2          -- see scummvm below, 2.2 files
+    ...                 -- other game engines and game files
+
+    shared              -- shared media across game versions
+        mame            -- for mame
+            snap            -- game play snapshot; video or static (front-end)
+            artwork         -- other game artwork
+            flyer           -- game flyer (front-end) 
+            marquee         -- game cab marquee
+            wheel           -- game wheel image (front-end)
+        daphne          -- for daphne
+            ...
+        scummvm         -- fos scummvm
+            ...
+
+    daphne              -- linked to current daphne
+        roms            -- game roms   
+        framefile       -- laserdisc movies and frame file configs
+            game        -- movies and control for game
+            game/game.txt -- control file for game
+        ...             -- links to $/shared/daphne/... media
+
+    mame                -- linked to current mame
+        roms            -- roms and CHDs
+        samples         -- sound samples (in-game)
+        nvram           -- stored non-volitaile
+        ...             -- links to $/shared/mame/... media
+
+    scummvm             -- linked to current scummvm
+        games           -- game files
+            game.scummvm    -- game launch file needed by libretro
+        ...             -- links to $/shared/scummvm/... media
+
+
 ## Graphical Front-End
 
 _Attract Mode_ is an attractive front-end that is small, easy to navigate, and only loosely documented. Which makes it perfect for my use. Oh, it's cross platform as well so I can use it on Linux.
