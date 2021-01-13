@@ -11,12 +11,11 @@
 # from libretro
 # bluez-libs-5.55-1 bluez-libs-5.55-1  enet-1.3.16-1  fmt-7.1.3-1  libzip-1.7.3-1  mbedtls-2.16.7-1 miniupnpc-2.1.20191224-3  minizip-1:1.2.11-4  snappy-1.1.8-2
 
-mame_user=mame
-mame_password=mame
+game_user=mame
 
 # If I am *not* the mame user, create the *mame* user and run as them.
-if [ "${USER}" != "${mame_user}" ]; then
-	if $(whiptail --yesno "You are not ${mame_user}. Continue anyway?" 0 0); then
+if [ "${USER}" != "${game_user}" ]; then
+	if $(whiptail --yesno "You are not ${game_user}. Continue anyway?" 0 0); then
 		:	# simply continues after the if...
 	else
 		exit 0
