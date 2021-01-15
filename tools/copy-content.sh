@@ -36,7 +36,7 @@ if [ -d ~/scummvm2.2 ]; then
 fi
 
 if [ -d ~/fbneo ]; then
-	ln -s ~/fbneo ~/fbneo
+	# ln -s ~/fbneo ~/fbneo
 	for art in ~/shared/mame/*; do
 		ln -s "${art}" ~/$(basename ${ver})/$(basename ${art})
 	done
@@ -48,4 +48,5 @@ cp -Rv ${content_dir}/assets/the_great_theme_collection-v10.3/* ~/.attract/
 
 # Unmount content disk
 sudo umount ${content_dir}
+
 
