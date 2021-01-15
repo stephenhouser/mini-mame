@@ -2,7 +2,7 @@
 
 contnet_dev=${1:-/dev/sdb2}
 content_dir=/mnt
-systems="daphne mame scummvm"
+systems="daphne mame scummvm fbneo"
 
 sudo mount ${contnet_dev} ${content_dir}
 
@@ -34,6 +34,11 @@ fi
 if [ -d ~/scummvm2.2 ]; then
 	ln -s ~/scummvm2.2 ~/scummvm
 fi
+
+if [ -d ~/fbneo ]; then
+	ln -s ~/fbneo ~/fbneo
+fi
+
 
 # Copy in The Great Theme Collection v10.3 files
 cp -Rv ${content_dir}/assets/the_great_theme_collection-v10.3/* ~/.attract/
