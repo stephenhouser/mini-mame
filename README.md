@@ -114,3 +114,33 @@ Scripts for setting up mini-mame arcade machine with Arch Linux
 * `bootstrap.sh` to create the `mame` account if you don't have it already
 * `bootstrap.sh` to pull the repo and run `setup-mini-mame.sh` which installs everything
 
+
+
+## Devices
+
+        Ultimarc Opti-PAC Trackball/Spinner
+        Cypress I-PAC Arcade Control Interface
+
+## Keys
+
+I want libRetro games to match typical MAME controls, which matches my I-PAC
+
+https://retropie.org.uk/docs/RetroArch/
+
+```
+                                -- Defender keys (from MAME)
+input_player1_start = "num1"    -- player 1 start
+input_player1_select = "num5"   -- player 1 coin
+
+input_player1_b = "ctrl"	    -- b1 fire
+input_player1_x = "alt"		    -- b2 thrust
+input_player1_a = "space"	    -- b3 smart bomb
+input_player1_y = "shift"	    -- b4 hyperspace
+input_player1_r = "z"		    -- b5 reverse
+input_player1_l = "x"		    -- b6
+
+input_player1_left = "left"
+input_player1_right = "right"
+input_player1_up = "up"
+input_player1_down = "down"
+```

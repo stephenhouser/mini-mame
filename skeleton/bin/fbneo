@@ -1,0 +1,1 @@
+exec /usr/bin/retroarch -L /usr/lib/libretro/fbneo_libretro.so ~/fbneo/roms/$*

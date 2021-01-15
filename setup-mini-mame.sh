@@ -118,7 +118,7 @@ download_core mame2010
 #download_core mame2016 # not available in latest build (url above)
 #download_core mame		# not available in latest build (url above)
 download_core scummvm
-
+download_core fbneo
 
 echo ""
 echo "*** RetroArch Games ***"
