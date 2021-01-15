@@ -37,6 +37,9 @@ fi
 
 if [ -d ~/fbneo ]; then
 	ln -s ~/fbneo ~/fbneo
+	for art in ~/shared/mame/*; do
+		ln -s "${art}" ~/$(basename ${ver})/$(basename ${art})
+	done
 fi
 
 
