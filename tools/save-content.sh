@@ -11,7 +11,7 @@ sync ~/scummvm2.2 /mnt/scummvm/
 sync ~/shared/scummvm /mnt/scummvm/shared/
 
 sync ~/fbneo /mnt/fbneo/
-sync ~/shared/fbneo /mnt/fbneo/shared/
+#sync ~/shared/fbneo /mnt/fbneo/shared/
 
 sync ~/mame0.37b5	/mnt/mame/
 sync ~/mame0.78+ /mnt/mame/
