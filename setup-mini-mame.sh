@@ -220,7 +220,7 @@ if [ -d "\${HOME}/bin" ] ; then
 fi
 
 if [ -z "\${DISPLAY}" ] && [ -n "\${XDG_VTNR}" ] && [ "\${XDG_VTNR}" -eq 1 ]; then
-	exec startx /usr/bin/attract -- -nocursor
+	exec /usr/bin/startx -- -nocursor
 fi
 EOF
 

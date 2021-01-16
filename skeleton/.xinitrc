@@ -20,5 +20,5 @@ xset -dpms		# disable monitor power management
 xset s off		# disable screen saver
 xset m 5/2 0	# tweak mouse
 
-#exec /usr/bin/attract
-exec /usr/bin/startlxde
+exec /usr/bin/attract
+#exec /usr/bin/startlxde
