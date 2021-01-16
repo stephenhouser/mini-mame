@@ -1,6 +1,0 @@
-#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons;Series;Language;Region;Rating
-ace;Space Ace;daphne;;1984;Advanced Microcomputer Systems;;;;;;;;;;;;;;
-cliff;Cliff Hanger;daphne;;;;;;;;;;;;;;;;;
-lair;Dragon's Lair;daphne;;1983;Advanced Microcomputer Systems;Laserdisc;;;;;;;;;;;;;
-lair2;Dragon's Lair 2;daphne;;1991;Leeland Corporation;;;;;;;;;;;;;;
-sae;Space Ace Enhancement;daphne;;;;;;;;;;;;;;;;;
