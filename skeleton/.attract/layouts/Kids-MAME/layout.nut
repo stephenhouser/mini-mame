@@ -240,7 +240,7 @@ d_name.set_rgb(128, 0, 128);
 //
 // System logo + shadow option
 //
-local system_logo = fe.add_image( "systems/[Emulator]", flx*0.22, fly*0.76, flw*0.25, flh*0.15 );
+local system_logo = fe.add_image( "systems/[Emulator]", 125, fly*0.76, flw*0.25, flh*0.15 );
 
 	// DROP SHADOW CODE
 local xsurf2;
@@ -296,7 +296,9 @@ if ( my_config["enable_logo_shadow"] == "Yes" && ShadersAvailable == 1) {
 }
 
 // animate logo + shadow if enabled
-local start_transition1 = {when = Transition.StartLayout, property = "y", start = fly*2,end = fly*0.76, tween = "cubic", time = ini_anim_time+500}
+local start_transition1 = {
+	when = Transition.StartLayout, property = "y", start = fly*2,end = fly*0.76, tween = "cubic", time = ini_anim_time+500
+}
 animation.add( PropertyAnimation( system_logo, start_transition1 ) );
 
 local start_transition_s1;
