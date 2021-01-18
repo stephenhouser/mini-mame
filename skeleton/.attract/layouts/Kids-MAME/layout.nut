@@ -203,8 +203,7 @@ local mask_factor = Setting("aspectDepend", "maskFactor");
 //
 // *** Load background art
 //
-//local bg_img = my_config["select_bg_img"];
-//local bg = FadeArt(bg_img, 0, 0, flw, flh);
+//local bg = fe.add_image("background.png", 0, 0, flw, flh);
 
 //
 // *** Video snaps and static
@@ -297,7 +296,12 @@ if ( my_config["enable_logo_shadow"] == "Yes" && ShadersAvailable == 1) {
 
 // animate logo + shadow if enabled
 local start_transition1 = {
-	when = Transition.StartLayout, property = "y", start = fly*2,end = fly*0.76, tween = "cubic", time = ini_anim_time+500
+	when = Transition.StartLayout, 
+	property = "y", 
+	start = fly*2,
+	end = fly*0.76, 
+	tween = "cubic", 
+	time = ini_anim_time+500
 }
 animation.add( PropertyAnimation( system_logo, start_transition1 ) );
 
@@ -544,7 +548,7 @@ if ( my_config["enable_gboxart"] == "Yes") {
 		property = "x",
 		start = -flx,
 		end = 100, 
-		time = my_delay
+		time = ini_anim_time+500 
 	}
 	animation.add( PropertyAnimation( boxart, start_transition1 ) );
 	
@@ -566,7 +570,7 @@ if ( my_config["enable_gboxart"] == "Yes") {
 		property = "x",
 		start = -flx,
 		end = 100, 
-		time = my_delay
+		time = ini_anim_time+500 
 	}
 	animation.add(PropertyAnimation(boxart, move_transition1));
 }
