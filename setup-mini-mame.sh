@@ -141,6 +141,17 @@ sudo pacman -S --noconfirm mame
 # makepkg -si
 # cd -
 
+# Install/build ScummVM from AUR
+echo ""
+echo "Install Current ScummVM (windows games)..."
+sudo pacman -S --noconfirm scummvm scummvm-tools
+# git clone https://aur.archlinux.org/scummvm-git.git ~/src/scummvm
+# cd ~/src/scummvm
+# sed -i 's|https://github.com/mamedev/mame.git|https://github.com/mamedev/mame.git#tag=mame0227|' PKGBUILD
+# makepkg -si
+# cd -
+
+
 # Install/build attract mode from AUR
 # Uses git://github.com/DavidGriffith/daphne.git
 echo ""
@@ -157,7 +168,6 @@ git clone https://aur.archlinux.org/attract-git.git ~/src/attract
 cd ~/src/attract
 makepkg -si --noconfirm
 cd -
-
 
 # Microsoft Windows things...
 # https://wiki.archlinux.org/index.php/Wine
