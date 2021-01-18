@@ -20,4 +20,5 @@ sync ~/shared/mame /mnt/mame/shared/
 
 sync ~/.attract/ /mnt/frontend/attract
 sync ~/.config/retroarch /mnt/frontend/
+sync ~/.config/scummvm /mnt/frontend/
 sync ~/.mame/ /mnt/frontend/mame
