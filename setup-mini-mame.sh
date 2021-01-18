@@ -39,7 +39,7 @@ sudo pacman -Syu --noconfirm 		# upgrade the packages.
 # xorg-fonts-misc	-- we need some basic fonts for X11
 # xterm				-- you need some sort of terminal
 # alsa-utils		-- audio drivers
-# pulseaudio		-- for more complex than alsa
+# pulseaudio		-- for more complex than alsa <<- Don't use any longer
 # fuseiso			-- Enable user mounting of ISO images
 # lxde				-- lightweight window manager
 sudo pacman --noconfirm -S \
@@ -47,7 +47,7 @@ sudo pacman --noconfirm -S \
 	xf86-video-ati xf86-video-amdgpu xf86-video-intel xf86-video-nouveau xf86-video-fbdev \
 	xorg-fonts-misc xterm xorg-mkfontdir \
 	lxde \
-	alsa-utils pulseaudio \
+	alsa-utils \
 	fuseiso
 
 echo ""
@@ -93,7 +93,7 @@ sudo pacman -S --noconfirm \
 # Change some retroarch settings to my liking
 #sed -i 's|menu_show_core_updater = "false"|menu_show_core_updater = "true"|' ~/.config/retroarch/retroarch.cfg
 # Leave audio as pulse otherwise I get no sound in games when launching from attract mode as X manager
-##sed -i 's|audio_driver = "pulse"|audio_driver = "alsa"|' ~/.config/retroarch/retroarch.cfg
+#sed -i 's|audio_driver = "pulse"|audio_driver = "alsa"|' ~/.config/retroarch/retroarch.cfg
 #sed -i 's|video_threaded = "false"|video_threaded = "true"|' ~/.config/retroarch/retroarch.cfg
 #sed -i 's|video_fullscreen = "false"|video_fullscreen = "true"|' ~/.config/retroarch/retroarch.cfg
 
