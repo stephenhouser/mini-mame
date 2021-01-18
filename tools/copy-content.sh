@@ -42,7 +42,6 @@ if [ -d ~/fbneo ]; then
 	done
 fi
 
-
 # Copy in The Great Theme Collection v10.3 files
 cp -Rv ${content_dir}/assets/the_great_theme_collection-v10.3/* ~/.attract/
 
